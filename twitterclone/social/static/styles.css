@@ -1,0 +1,133 @@
+body {
+    display: flex;
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    background-color: #E7ECF0;
+}
+
+.sidebar {
+    position: sticky;
+    top: 0; 
+    width: 350px;
+    height: 100vh;
+    background-color: #ffffff;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar .logo {
+    margin-bottom: 32px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin: 20px 0;
+}
+
+.sidebar nav ul li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+img {
+    width: 35px;
+    height: 35px;
+    margin-right: 8px;
+    margin-left: 40px;
+    vertical-align: middle;
+}
+
+.post-img {
+    max-width: 80%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.logout {
+    position: absolute;
+    bottom: 20px; 
+    left: 20px;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.feed {
+    padding-left: 3px;
+    background-color: #E7ECF0;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 2px;
+    font-size: 19px;
+    background-color: #ffffff;
+    padding-top: 50px;
+    padding-left: 31px;
+    padding-bottom: 12px;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    width: 692px;
+    height: 142px;
+    padding-left: 31px;
+    margin-bottom: 6px;
+    margin-top: 3px;
+}
+
+input {
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-family: inherit;
+    font-size: 20px;
+    color: inherit;
+    height: 85px;
+}
+
+button {
+    background-color: #1da1f2; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 9999px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    width: 98px;
+    height: 42px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-right: 31px;
+}
+
+button:hover {
+        background-color: #0d95e8;
+}
+
+p {
+    margin-top: 2px;
+}
+
+.sidebar-post {
+    width: 230px;
+    height: 55px;
+    margin-left: 40px;
+}
+
+small {
+    color: #848788;
+}
