@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from .models import Tweet
+from .forms import TweetForm
 
 def register(request):
     if request.method == 'POST':
@@ -21,8 +22,14 @@ class LoginView(auth_views.LoginView):
 
 @login_required
 def feed(request):
-    if request.user.is_authenticated:
-        tweets = Tweet.objects.filter(author__user=request.user)
-        return render(request, 'feed.html', {'tweets': tweets})
+    if request.method == 'POST':
+        form = TweetForm(request.POST)
+        if form.is_valid():
+            tweet = form.save(commit=False)
+            tweet.author = request.user.profile
+            tweet.save()
+            return redirect('feed')
     else:
-        return redirect('login')
+        form = TweetForm()
+    tweets = Tweet.objects.all()
+    return render(request, 'social/feed.html', {'form': form, 'tweets': tweets})

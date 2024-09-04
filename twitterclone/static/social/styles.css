@@ -82,21 +82,30 @@ h1 {
     flex-direction: column;
     background-color: #ffffff;
     width: 692px;
-    height: 142px;
-    padding-left: 31px;
+    padding: 15px 31px;
     margin-bottom: 6px;
     margin-top: 3px;
+    border-radius: 10px;
 }
 
-input {
-    border: none;
-    padding: 0;
-    margin: 0;
-    outline: none;
+textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 10px;
     font-family: inherit;
-    font-size: 20px;
-    color: inherit;
-    height: 85px;
+    font-size: 16px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+textarea::placeholder {
+    color: #999;
+}
+
+textarea:focus {
+    border-color: #1da1f2;
+    outline: none;
 }
 
 button {
@@ -111,11 +120,11 @@ button {
     height: 42px;
     cursor: pointer;
     align-self: flex-end;
-    margin-right: 31px;
+    margin-top: 10px;
 }
 
 button:hover {
-        background-color: #0d95e8;
+    background-color: #0d95e8;
 }
 
 p {
