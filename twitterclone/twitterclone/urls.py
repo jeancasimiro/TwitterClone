@@ -27,5 +27,6 @@ def redirect_to_feed(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', redirect_to_feed),  
-    path('social/', include('social.urls')), 
+    path('social/', include('social.urls')),  
+    path('api/', include('social.api_urls')),  
 ]
