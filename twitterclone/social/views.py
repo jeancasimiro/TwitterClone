@@ -4,11 +4,18 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-from .models import Tweet
-from .forms import RegisterForm, TweetForm, LoginForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from rest_framework import generics, viewsets, status
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from .models import Profile, Tweet
+from .forms import RegisterForm, TweetForm, LoginForm
+from .serializers import ProfileSerializer, TweetSerializer, UserSerializer
 
 def register(request):
     if request.method == 'POST':
@@ -51,3 +58,45 @@ def feed(request):
     tweets = Tweet.objects.all()
     return render(request, 'feed.html', {'form': form, 'tweets': tweets})
 
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class TweetViewSet(viewsets.ModelViewSet):
+    queryset = Tweet.objects.all()
+    serializer_class = TweetSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.profile)
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = UserSerializer
+
+class FeedAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        tweets = Tweet.objects.all()
+        serializer = TweetSerializer(tweets, many=True)
+        return Response(serializer.data)
+
+class LoginAPIView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email
+                }
+            })
+        else:
+            return Response({'detail': 'Credenciais inválidas.'}, status=status.HTTP_401_UNAUTHORIZED)
